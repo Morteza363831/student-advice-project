@@ -1,5 +1,6 @@
 package com.example.studentadviceproject.dto;
 
+import com.example.studentadviceproject.validation.ValidNationalID;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -12,6 +13,10 @@ import java.io.Serializable;
 public class AdviceDto implements Serializable {
     @NotNull(message = "id cant be null")
     long id;
+
+    @NotNull(message = "kode melli cant be null")
+    @ValidNationalID(message = "kode melli is incorrect")
+    String kodeMelli;
 
     @NotBlank(message = "please enter your first name")
     @Size(min = 2, max = 20, message = "first name must be between 2 and 20")
