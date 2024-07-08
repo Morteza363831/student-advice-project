@@ -8,6 +8,7 @@ import com.example.studentadviceproject.repository.StudentRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import jakarta.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class StudentServiceImpl implements StudentService{
 
     @Override
     public Student createStudent(StudentDto studentDto) {
-        Student student = modelMapper.map(studentDto, Student.class);
+        @Valid Student student = modelMapper.map(studentDto, Student.class);
         return studentRepository.save(student);
     }
 

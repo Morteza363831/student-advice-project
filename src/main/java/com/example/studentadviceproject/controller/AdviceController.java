@@ -5,6 +5,7 @@ import com.example.studentadviceproject.dto.StudentDto;
 import com.example.studentadviceproject.entity.Advice;
 import com.example.studentadviceproject.service.AdvicerService;
 import com.example.studentadviceproject.service.StudentService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,7 @@ public class AdviceController {
     }
 
     @PostMapping("advices")
-    public ResponseEntity<Advice> advice(@RequestBody AdviceDto adviceDto) {
+    public ResponseEntity<Advice> addAdvice(@Valid @RequestBody AdviceDto adviceDto) {
         return new ResponseEntity<Advice>(advicerService.createAdvice(adviceDto), HttpStatus.OK);
     }
 

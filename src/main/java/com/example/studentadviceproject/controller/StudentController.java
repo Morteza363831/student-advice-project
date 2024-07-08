@@ -7,8 +7,11 @@ import com.example.studentadviceproject.service.AdvicerService;
 import com.example.studentadviceproject.service.StudentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -17,13 +20,19 @@ public class StudentController {
     private final StudentService studentService;
     private final AdvicerService advicerService;
 
-    public StudentController(StudentService studentService,AdvicerService advicerService) {
+    public StudentController( StudentService studentService, AdvicerService advicerService) {
         this.studentService = studentService;
         this.advicerService = advicerService;
     }
 
     @PostMapping("students")
-    public ResponseEntity<Student> addStudent(@RequestBody StudentDto studentDto) {
+    public ResponseEntity addStudent(@Valid @RequestBody StudentDto studentDto,BindingResult bindingResult) {
+      if (bindingResult.hasErrors()) {
+          return new ResponseEntity<>(bindingResult.getAllErrors().stream().map(x-> {
+              return x.getDefaultMessage();
+
+          }).toList(),HttpStatus.BAD_REQUEST);
+      }
         return new ResponseEntity<Student>(studentService.createStudent(studentDto), HttpStatus.CREATED);
     }
 
@@ -52,4 +61,5 @@ public class StudentController {
         List<StudentDto> studentList = studentService.getStudentsByAdviceId(adivceId);
         return new ResponseEntity<List<StudentDto>>(studentList,HttpStatus.OK);
     }
+
 }
