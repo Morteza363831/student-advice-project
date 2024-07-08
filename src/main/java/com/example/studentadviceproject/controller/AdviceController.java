@@ -29,12 +29,12 @@ public class AdviceController {
         return new ResponseEntity<Advice>(advicerService.createAdvice(adviceDto), HttpStatus.OK);
     }
 
-    @GetMapping("adivces/{adviceId}")
+    @GetMapping("advices/{adviceId}")
     public ResponseEntity<AdviceDto> getAdvice(@PathVariable Long adviceId) {
         return new ResponseEntity<AdviceDto>(advicerService.getAdviceById(adviceId), HttpStatus.OK);
     }
 
-    @GetMapping("adivces/all")
+    @GetMapping("advices/all")
     public ResponseEntity<List<AdviceDto>> getAllAdvice() {
         return new ResponseEntity<List<AdviceDto>>(advicerService.getAllAdvice(), HttpStatus.OK);
     }

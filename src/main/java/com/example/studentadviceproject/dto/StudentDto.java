@@ -20,7 +20,8 @@ public class StudentDto {
     @NotBlank(message = "please enter your last name")
     String lastName;
 
-    @Size(min = 4, max = 6, message = "gender must be between 4 and 6")
+    //@Size(min = 4, max = 6, message = "gender must be between 4 and 6")
+    @Pattern(regexp = "^male|female$", message = "male or female")
     @NotBlank(message = "please enter your gender")
     String gender;
 

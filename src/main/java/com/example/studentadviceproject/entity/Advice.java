@@ -18,5 +18,8 @@ public class Advice {
     private String kodeMelli;
     private String firstName;
     private String lastName;
+    private Gender gender;
     private int age;
 }
+
+

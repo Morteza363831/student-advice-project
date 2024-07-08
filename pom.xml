@@ -77,6 +77,10 @@
             <artifactId>hibernate-validator-annotation-processor</artifactId>
             <version>7.0.4.Final</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
