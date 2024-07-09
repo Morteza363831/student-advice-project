@@ -8,7 +8,9 @@
 
 <form action="#" th:action="@{/students/update}" th:object="${studentAdvice}" method="post">
     <input type="text" name="studentKodeMelli" th:value="*{studentKodeMelli}" placeholder="student kodeMelli">
+    <td th:if="${#fields.hasErrors('studentKodeMelli')}" th:errors="*{studentKodeMelli}">kode Melli Error</td>
     <input type="text" name="adviceKodeMelli" placeholder="advice kodeMelli">
+    <td th:if="${#fields.hasErrors('adviceKodeMelli')}" th:errors="*{adviceKodeMelli}">kode Melli Error</td>
     <button type="submit">submit</button>
 </form>
 </body>

@@ -39,10 +39,7 @@ public class StudentController {
             ,BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-          List<ObjectError> list = bindingResult.getAllErrors().stream().toList();
-          for (ObjectError objectError : list) {
-              System.out.println(objectError.getDefaultMessage());
-          }
+          return "addStudent";
         }
         studentService.createStudent(studentDto);
         return "redirect:/students/new";
@@ -60,10 +57,7 @@ public class StudentController {
             ,BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            List<ObjectError> list = bindingResult.getAllErrors().stream().toList();
-            for (ObjectError objectError : list) {
-                System.out.println(objectError.getDefaultMessage());
-            }
+            return "updateStudent";
         }
         StudentDto studentDto = studentService.getStudentByKodeMelli(studentAdviceDto.getStudentKodeMelli());
         AdviceDto adviceDto = advicerService.getAdviceByKodeMelli(studentAdviceDto.getAdviceKodeMelli());
@@ -84,8 +78,7 @@ public class StudentController {
             , HttpSession session, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            bindingResult.getAllErrors().forEach(objectError ->
-                    System.out.println(objectError.getDefaultMessage()));
+            return "findStudent";
         }
         session.setAttribute("student"
                 ,studentService.getStudentByKodeMelli(studentKodeMelli.getStudentKodeMelli()));
@@ -114,7 +107,12 @@ public class StudentController {
         return "deleteStudent";
     }
     @PostMapping("/students/delete")
-    public String deleteStudent(@ModelAttribute("studentKodeMelli") StudentKodeMelli studentKodeMelli) {
+    public String deleteStudent(@ModelAttribute("studentKodeMelli") StudentKodeMelli studentKodeMelli,
+                                BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return "deleteStudent";
+        }
         studentService.deleteStudent(studentKodeMelli.getStudentKodeMelli());
         return "redirect:/students/all";
     }

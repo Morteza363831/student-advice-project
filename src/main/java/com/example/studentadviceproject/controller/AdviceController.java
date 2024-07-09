@@ -2,9 +2,6 @@ package com.example.studentadviceproject.controller;
 
 import com.example.studentadviceproject.dto.AdviceDto;
 import com.example.studentadviceproject.dto.AdviceKodeMelli;
-import com.example.studentadviceproject.dto.StudentDto;
-import com.example.studentadviceproject.dto.StudentKodeMelli;
-import com.example.studentadviceproject.entity.Advice;
 import com.example.studentadviceproject.service.AdvicerService;
 import com.example.studentadviceproject.service.StudentService;
 import jakarta.servlet.http.HttpSession;

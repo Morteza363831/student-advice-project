@@ -10,6 +10,8 @@
 <form action="#" th:action="@{/advices/delete}" th:object="${adviceKodeMelli}" method="post">
 
     <input type="text" th:field="*{adviceKodeMelli}" placeholder="advice kode melli">
+    <td th:if="${#fields.hasErrors('adviceKodeMelli')}" th:errors="*{adviceKodeMelli}">kode Melli Error</td>
+    <br>
     <button type="submit" >submit</button>
 </form>
 </body>
