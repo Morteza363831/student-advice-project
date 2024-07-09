@@ -2,16 +2,26 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>update student</title>
+    <title>Update Student</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-
-<form action="#" th:action="@{/students/update}" th:object="${studentAdvice}" method="post">
-    <input type="text" name="studentKodeMelli" th:value="*{studentKodeMelli}" placeholder="student kodeMelli">
-    <td th:if="${#fields.hasErrors('studentKodeMelli')}" th:errors="*{studentKodeMelli}">kode Melli Error</td>
-    <input type="text" name="adviceKodeMelli" placeholder="advice kodeMelli">
-    <td th:if="${#fields.hasErrors('adviceKodeMelli')}" th:errors="*{adviceKodeMelli}">kode Melli Error</td>
-    <button type="submit">submit</button>
-</form>
+<div class="container my-5">
+    <h1 class="mb-4">Update Student</h1>
+    <form th:action="@{/students/update}" th:object="${studentAdvice}" method="post">
+        <div class="mb-3">
+            <label for="studentKodeMelli" class="form-label">Student Kode Melli</label>
+            <input type="text" class="form-control" id="studentKodeMelli" name="studentKodeMelli" th:value="*{studentKodeMelli}" placeholder="Student Kode Melli">
+            <div th:if="${#fields.hasErrors('studentKodeMelli')}" th:errors="*{studentKodeMelli}" class="text-danger"></div>
+        </div>
+        <div class="mb-3">
+            <label for="adviceKodeMelli" class="form-label">Advice Kode Melli</label>
+            <input type="text" class="form-control" id="adviceKodeMelli" name="adviceKodeMelli" placeholder="Advice Kode Melli">
+            <div th:if="${#fields.hasErrors('adviceKodeMelli')}" th:errors="*{adviceKodeMelli}" class="text-danger"></div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
