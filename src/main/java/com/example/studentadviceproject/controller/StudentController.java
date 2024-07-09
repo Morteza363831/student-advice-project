@@ -3,16 +3,14 @@ package com.example.studentadviceproject.controller;
 import com.example.studentadviceproject.dto.AdviceDto;
 import com.example.studentadviceproject.dto.StudentAdviceDto;
 import com.example.studentadviceproject.dto.StudentDto;
-import com.example.studentadviceproject.entity.Student;
+import com.example.studentadviceproject.dto.StudentKodeMelli;
 import com.example.studentadviceproject.service.AdvicerService;
 import com.example.studentadviceproject.service.StudentService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
@@ -28,6 +26,8 @@ public class StudentController {
         this.studentService = studentService;
         this.advicerService = advicerService;
     }
+
+
 
     @GetMapping("/students/new")
     public String addStudent(Model model) {
@@ -48,13 +48,23 @@ public class StudentController {
         return "redirect:/students/new";
     }
 
+
+
     @GetMapping("/students/update")
     public String updateStudent(Model model) {
         model.addAttribute("studentAdvice", new StudentAdviceDto());
         return "updateStudent";
     }
     @PostMapping("/students/update")
-    public String updateStudent(@ModelAttribute("studentAdvice")StudentAdviceDto studentAdviceDto) {
+    public String updateStudent(@ModelAttribute("studentAdvice")StudentAdviceDto studentAdviceDto
+            ,BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            List<ObjectError> list = bindingResult.getAllErrors().stream().toList();
+            for (ObjectError objectError : list) {
+                System.out.println(objectError.getDefaultMessage());
+            }
+        }
         StudentDto studentDto = studentService.getStudentByKodeMelli(studentAdviceDto.getStudentKodeMelli());
         AdviceDto adviceDto = advicerService.getAdviceByKodeMelli(studentAdviceDto.getAdviceKodeMelli());
         studentService.updateStudent(studentDto, adviceDto);
@@ -63,21 +73,37 @@ public class StudentController {
     }
 
 
-    @GetMapping("students/{kodeMelli}")
-    public ResponseEntity<StudentDto> getStudent(@PathVariable String kodeMelli) {
-        return new ResponseEntity<StudentDto>(studentService.getStudentByKodeMelli(kodeMelli), HttpStatus.OK);
+
+    @GetMapping("/students/find")
+    public String findStudent(Model model) {
+        model.addAttribute("studentKodeMelli", new StudentKodeMelli());
+        return "findStudent";
+    }
+    @PostMapping("/students/find")
+    public String getStudent(@ModelAttribute("studentKodeMelli") StudentKodeMelli studentKodeMelli
+            , HttpSession session, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            bindingResult.getAllErrors().forEach(objectError ->
+                    System.out.println(objectError.getDefaultMessage()));
+        }
+        session.setAttribute("student"
+                ,studentService.getStudentByKodeMelli(studentKodeMelli.getStudentKodeMelli()));
+
+        return "redirect:/students/find/student";
+    }
+    @GetMapping("/students/find/student")
+    public String getStudent(Model model,HttpSession session) {
+        model.addAttribute("student",session.getAttribute("student"));
+        StudentDto studentDto = (StudentDto) session.getAttribute("student");
+        System.out.println(studentDto.getKodeMelli());
+        return "student";
     }
 
     @GetMapping("/students/all")
     public String getAllStudents(Model model) {
         model.addAttribute("students", studentService.getAllStudents());
         return "allStudents";
-    }
-
-    @GetMapping("students/all/{adviceId}")
-    public ResponseEntity<List<StudentDto>> getAllStudentsByAdivceId(@PathVariable Long adviceId) {
-        List<StudentDto> studentList = studentService.getStudentsByAdviceId(adviceId);
-        return new ResponseEntity<List<StudentDto>>(studentList,HttpStatus.OK);
     }
 
 }

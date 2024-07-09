@@ -1,10 +1,12 @@
 package com.example.studentadviceproject.controller;
 
 import com.example.studentadviceproject.dto.AdviceDto;
+import com.example.studentadviceproject.dto.AdviceKodeMelli;
 import com.example.studentadviceproject.dto.StudentDto;
 import com.example.studentadviceproject.entity.Advice;
 import com.example.studentadviceproject.service.AdvicerService;
 import com.example.studentadviceproject.service.StudentService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,13 +30,14 @@ public class AdviceController {
         this.studentService = studentService;
     }
 
-    @GetMapping("advices/new")
+
+
+    @GetMapping("/advices/new")
     public String addAdvice(Model model) {
         model.addAttribute("advice", new AdviceDto());
         return "addAdvice";
     }
-
-    @PostMapping("advices/new")
+    @PostMapping("/advices/new")
     public String addAdvice(@Valid @ModelAttribute("advice") AdviceDto adviceDto, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
             List<FieldError> fieldErrors = bindingResult.getFieldErrors();
@@ -47,10 +50,35 @@ public class AdviceController {
     }
 
 
-    @GetMapping("advices/{adviceId}")
-    public ResponseEntity<AdviceDto> getAdvice(@PathVariable String kodeMelli) {
-        return new ResponseEntity<AdviceDto>(advicerService.getAdviceByKodeMelli(kodeMelli), HttpStatus.OK);
+
+    @GetMapping("/advices/find")
+    public String findAdvice(Model model) {
+        model.addAttribute("adviceKodeMelli",new AdviceKodeMelli());
+        return "findAdvice";
     }
+    @PostMapping("advices/find")
+    public String getAdvice(@ModelAttribute("adviceKodeMelli") AdviceKodeMelli adviceKodeMelli,
+                            HttpSession session, BindingResult bindingResult) {
+
+        if(bindingResult.hasErrors()) {
+            List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+            for (FieldError fieldError : fieldErrors) {
+                System.out.println(fieldError.getDefaultMessage());
+            }
+        }
+
+        session.setAttribute("advice",
+                advicerService.getAdviceByKodeMelli(adviceKodeMelli.getAdviceKodeMelli()));
+
+        return "redirect:/advices/find/advice";
+    }
+    @GetMapping("advices/find/advice")
+    public String getAdvice(HttpSession session, Model model) {
+        model.addAttribute("advice", session.getAttribute("advice"));
+        return "advice";
+    }
+
+
 
     @GetMapping("advices/all")
     public String getAllAdvice(Model model) {
@@ -58,11 +86,4 @@ public class AdviceController {
         return "allAdvices";
     }
 
-    @PostMapping("advices/{adviceId}/{studentId}")
-    public ResponseEntity<Advice> updateAdvice(@PathVariable String adviceKodeMelli
-            , @PathVariable String studentKodeMelli) {
-        AdviceDto adviceDto = advicerService.getAdviceByKodeMelli(adviceKodeMelli);
-        StudentDto studentDto = studentService.getStudentByKodeMelli(studentKodeMelli);
-        return new ResponseEntity<Advice>(advicerService.updateAdvice(adviceDto,studentDto), HttpStatus.OK);
-    }
 }
