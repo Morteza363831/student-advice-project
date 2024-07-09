@@ -5,6 +5,7 @@ import com.example.studentadviceproject.dto.StudentDto;
 import com.example.studentadviceproject.entity.Advice;
 import com.example.studentadviceproject.entity.Student;
 import com.example.studentadviceproject.repository.StudentRepository;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -39,8 +40,9 @@ public class StudentServiceImpl implements StudentService{
     }
 
     @Override
-    public void deleteStudent(Long studentId) {
-        studentRepository.deleteById(studentId);
+    @Transactional
+    public void deleteStudent(String kodeMelli) {
+        studentRepository.deleteStudentByKodeMelli(kodeMelli);
     }
 
     @Override

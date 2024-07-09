@@ -106,4 +106,17 @@ public class StudentController {
         return "allStudents";
     }
 
+
+
+    @GetMapping("/students/delete")
+    public String deleteStudent(Model model) {
+        model.addAttribute("studentKodeMelli", new StudentKodeMelli());
+        return "deleteStudent";
+    }
+    @PostMapping("/students/delete")
+    public String deleteStudent(@ModelAttribute("studentKodeMelli") StudentKodeMelli studentKodeMelli) {
+        studentService.deleteStudent(studentKodeMelli.getStudentKodeMelli());
+        return "redirect:/students/all";
+    }
+
 }

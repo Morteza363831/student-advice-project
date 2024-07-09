@@ -14,7 +14,7 @@ public interface AdvicerService {
 
     Advice updateAdvice(AdviceDto adviceDto, StudentDto studentDto);
 
-    void deleteAdvice(long adviceId);
+    void deleteAdvice(String kodeMelli);
 
     AdviceDto getAdviceByKodeMelli(String kodeMelli);
 

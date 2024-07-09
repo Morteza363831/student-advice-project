@@ -12,7 +12,7 @@ public interface StudentService {
 
     Student updateStudent(StudentDto studentDto, AdviceDto adviceDto);
 
-    void deleteStudent(Long studentId);
+    void deleteStudent(String kodeMelli);
 
     List<StudentDto> getAllStudents();
 

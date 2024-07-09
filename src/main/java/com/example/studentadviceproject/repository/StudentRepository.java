@@ -16,4 +16,6 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 
     @Query(value = "select * from student where kode_melli = :kodeMelli", nativeQuery = true)
     Student findStudentsByKodeMelli(@Param("kodeMelli") String kodeMelli);
+
+    void deleteStudentByKodeMelli(String kodeMelli);
 }

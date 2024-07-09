@@ -14,4 +14,6 @@ public interface AdvicerRepository extends JpaRepository<Advice,Long> {
 
     @Query(value = "select * from advice where kode_melli = :kodeMelli", nativeQuery = true)
     Advice findAdviceByKodeMelli(@Param("kodeMelli") String kodeMelli);
+
+    void deleteAdviceByKodeMelli(String kodeMelli);
 }

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>delete advice</title>
+</head>
+<body>
+
+
+<form action="#" th:action="@{/advices/delete}" th:object="${adviceKodeMelli}" method="post">
+
+    <input type="text" th:field="*{adviceKodeMelli}" placeholder="advice kode melli">
+    <button type="submit" >submit</button>
+</form>
+</body>
+</html>

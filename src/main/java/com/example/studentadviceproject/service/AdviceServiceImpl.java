@@ -47,8 +47,8 @@ public class AdviceServiceImpl implements AdvicerService{
     }
 
     @Override
-    public void deleteAdvice(long adviceId) {
-        advicerRepository.deleteById(adviceId);
+    public void deleteAdvice(String kodeMelli) {
+        advicerRepository.deleteAdviceByKodeMelli(kodeMelli);
     }
 
     @Override

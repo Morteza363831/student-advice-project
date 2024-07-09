@@ -3,6 +3,7 @@ package com.example.studentadviceproject.controller;
 import com.example.studentadviceproject.dto.AdviceDto;
 import com.example.studentadviceproject.dto.AdviceKodeMelli;
 import com.example.studentadviceproject.dto.StudentDto;
+import com.example.studentadviceproject.dto.StudentKodeMelli;
 import com.example.studentadviceproject.entity.Advice;
 import com.example.studentadviceproject.service.AdvicerService;
 import com.example.studentadviceproject.service.StudentService;
@@ -85,5 +86,19 @@ public class AdviceController {
         model.addAttribute("advices", advicerService.getAllAdvice());
         return "allAdvices";
     }
+
+
+
+    @GetMapping("/advices/delete")
+    public String deleteStudent(Model model) {
+        model.addAttribute("adviceKodeMelli", new AdviceKodeMelli());
+        return "deleteAdvice";
+    }
+    @PostMapping("/advices/delete")
+    public String deleteStudent(@ModelAttribute("adviceKodeMelli") AdviceKodeMelli adviceKodeMelli) {
+        studentService.deleteStudent(adviceKodeMelli.getAdviceKodeMelli());
+        return "redirect:/advices/all";
+    }
+
 
 }
