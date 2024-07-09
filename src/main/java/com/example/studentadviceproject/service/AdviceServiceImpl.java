@@ -52,8 +52,8 @@ public class AdviceServiceImpl implements AdvicerService{
     }
 
     @Override
-    public AdviceDto getAdviceById(long adviceId) {
-        AdviceDto adviceDto = modelMapper.map(advicerRepository.findById(adviceId).get(), AdviceDto.class);
+    public AdviceDto getAdviceByKodeMelli(String kodeMelli) {
+        AdviceDto adviceDto = modelMapper.map(advicerRepository.findAdviceByKodeMelli(kodeMelli), AdviceDto.class);
         return adviceDto;
     }
 

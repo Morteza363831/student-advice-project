@@ -16,6 +16,6 @@ public interface AdvicerService {
 
     void deleteAdvice(long adviceId);
 
-    AdviceDto getAdviceById(long adviceId);
+    AdviceDto getAdviceByKodeMelli(String kodeMelli);
 
 }

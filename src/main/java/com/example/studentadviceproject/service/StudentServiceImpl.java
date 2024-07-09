@@ -33,7 +33,6 @@ public class StudentServiceImpl implements StudentService{
     @Override
     public Student updateStudent(StudentDto studentDto, AdviceDto adviceDto) {
         Advice advice = modelMapper.map(adviceDto, Advice.class);
-
         Student student = modelMapper.map(studentDto, Student.class);
         student.setAdvice(advice);
         return studentRepository.save(student);
@@ -56,8 +55,8 @@ public class StudentServiceImpl implements StudentService{
     }
 
     @Override
-    public StudentDto getStudentById(Long studentId) {
-        StudentDto studentDto = modelMapper.map(studentRepository.findById(studentId).get(), StudentDto.class);
+    public StudentDto getStudentByKodeMelli(String kodeMelli) {
+        StudentDto studentDto = modelMapper.map(studentRepository.findStudentsByKodeMelli(kodeMelli), StudentDto.class);
         System.out.println(studentDto.getId());
         return studentDto;
     }

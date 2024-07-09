@@ -16,7 +16,7 @@ public interface StudentService {
 
     List<StudentDto> getAllStudents();
 
-    StudentDto getStudentById(Long studentId);
+    StudentDto getStudentByKodeMelli(String kodeMelli);
 
     List<StudentDto> getStudentsByAdviceId(Long adviceId);
 }

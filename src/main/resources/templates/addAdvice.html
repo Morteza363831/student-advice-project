@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>add Advice</title>
+</head>
+<body>
+
+
+<form action="#" th:action="@{/advices/new}" th:object="${advice}" method="post">
+    <input type="text" th:field="*{kodeMelli}" placeholder="kode melli">
+    <input type="text" th:field="*{firstName}" placeholder="first name">
+    <input type="text" th:field="*{lastName}" placeholder="last name">
+    <input type="text" th:field="*{gender}" placeholder="gender">
+    <input type="text" th:field="*{age}" placeholder="age">
+    <button type="submit">submit</button>
+
+</form>
+</body>
+</html>

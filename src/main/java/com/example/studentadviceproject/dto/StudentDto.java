@@ -1,5 +1,6 @@
 package com.example.studentadviceproject.dto;
 
+import com.example.studentadviceproject.validation.ValidNationalID;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 import lombok.NonNull;
@@ -12,6 +13,11 @@ import java.io.Serializable;
 public class StudentDto {
     @NotNull(message = "id cant be null")
     long id;
+
+    @NotNull(message = "kode melli cant be null")
+    @ValidNationalID(message = "incorrect kode melli")
+    String kodeMelli;
+
     @Size(min = 2, max = 20, message = "first name must be between 2 and 20")
     @NotBlank(message = "please enter your first name")
     String firstName;

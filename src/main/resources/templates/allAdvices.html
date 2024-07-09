@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>all advices</title>
+</head>
+<body>
+
+<table>
+    <thead>
+    <th>kode melli</th>
+    <th>first name</th>
+    <th>last name</th>
+    <th>gender</th>
+    <th>age</th>
+    </thead>
+    <tbody>
+        <tr th:each="advice:${advices}">
+            <td th:text="${advice.kodeMelli}"></td>
+            <td th:text="${advice.firstName}"></td>
+            <td th:text="${advice.lastName}"></td>
+            <td th:text="${advice.gender}"></td>
+            <td th:text="${advice.age}"></td>
+        </tr>
+    </tbody>
+</table>
+</body>
+</html>

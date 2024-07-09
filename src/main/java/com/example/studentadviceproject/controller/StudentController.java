@@ -1,20 +1,24 @@
 package com.example.studentadviceproject.controller;
 
 import com.example.studentadviceproject.dto.AdviceDto;
+import com.example.studentadviceproject.dto.StudentAdviceDto;
 import com.example.studentadviceproject.dto.StudentDto;
 import com.example.studentadviceproject.entity.Student;
 import com.example.studentadviceproject.service.AdvicerService;
 import com.example.studentadviceproject.service.StudentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 import java.util.List;
 
-@RestController
+@Controller
 public class StudentController {
 
     private final StudentService studentService;
@@ -25,40 +29,54 @@ public class StudentController {
         this.advicerService = advicerService;
     }
 
-    @PostMapping("students")
-    public ResponseEntity addStudent(@Valid @RequestBody StudentDto studentDto,BindingResult bindingResult) {
-      if (bindingResult.hasErrors()) {
-          return new ResponseEntity<>(bindingResult.getAllErrors().stream().map(x-> {
-              return x.getDefaultMessage();
+    @GetMapping("/students/new")
+    public String addStudent(Model model) {
+        model.addAttribute("student", new StudentDto());
+        return "addStudent";
+    }
+    @PostMapping("/students/new")
+    public String addStudent(@Valid @ModelAttribute("student") StudentDto studentDto
+            ,BindingResult bindingResult) {
 
-          }).toList(),HttpStatus.BAD_REQUEST);
-      }
-        return new ResponseEntity<Student>(studentService.createStudent(studentDto), HttpStatus.CREATED);
+        if (bindingResult.hasErrors()) {
+          List<ObjectError> list = bindingResult.getAllErrors().stream().toList();
+          for (ObjectError objectError : list) {
+              System.out.println(objectError.getDefaultMessage());
+          }
+        }
+        studentService.createStudent(studentDto);
+        return "redirect:/students/new";
     }
 
-    @PostMapping("students/{studentId}/{adviceId}")
-    public Student updateStudent(@PathVariable Long studentId, @PathVariable Long adviceId) {
-        StudentDto studentDto = studentService.getStudentById(studentId);
-        AdviceDto adviceDto = advicerService.getAdviceById(adviceId);
-        advicerService.updateAdvice(adviceDto,studentDto);
-        return studentService.updateStudent(studentDto, adviceDto);
+    @GetMapping("/students/update")
+    public String updateStudent(Model model) {
+        model.addAttribute("studentAdvice", new StudentAdviceDto());
+        return "updateStudent";
+    }
+    @PostMapping("/students/update")
+    public String updateStudent(@ModelAttribute("studentAdvice")StudentAdviceDto studentAdviceDto) {
+        StudentDto studentDto = studentService.getStudentByKodeMelli(studentAdviceDto.getStudentKodeMelli());
+        AdviceDto adviceDto = advicerService.getAdviceByKodeMelli(studentAdviceDto.getAdviceKodeMelli());
+        studentService.updateStudent(studentDto, adviceDto);
+        return "redirect:/students/update";
 
     }
 
 
-    @GetMapping("students/{studentId}")
-    public ResponseEntity<StudentDto> getStudent(@PathVariable Long studentId) {
-        return new ResponseEntity<StudentDto>(studentService.getStudentById(studentId), HttpStatus.OK);
+    @GetMapping("students/{kodeMelli}")
+    public ResponseEntity<StudentDto> getStudent(@PathVariable String kodeMelli) {
+        return new ResponseEntity<StudentDto>(studentService.getStudentByKodeMelli(kodeMelli), HttpStatus.OK);
     }
 
-    @GetMapping("students/all")
-    public ResponseEntity<List<StudentDto>> getAllStudents() {
-        return new ResponseEntity<List<StudentDto>>(studentService.getAllStudents(), HttpStatus.OK);
+    @GetMapping("/students/all")
+    public String getAllStudents(Model model) {
+        model.addAttribute("students", studentService.getAllStudents());
+        return "allStudents";
     }
 
-    @GetMapping("students/all/{adivceId}")
-    public ResponseEntity<List<StudentDto>> getAllStudentsByAdivceId(@PathVariable Long adivceId) {
-        List<StudentDto> studentList = studentService.getStudentsByAdviceId(adivceId);
+    @GetMapping("students/all/{adviceId}")
+    public ResponseEntity<List<StudentDto>> getAllStudentsByAdivceId(@PathVariable Long adviceId) {
+        List<StudentDto> studentList = studentService.getStudentsByAdviceId(adviceId);
         return new ResponseEntity<List<StudentDto>>(studentList,HttpStatus.OK);
     }
 
