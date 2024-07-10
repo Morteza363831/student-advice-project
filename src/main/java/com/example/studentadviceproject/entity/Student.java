@@ -8,6 +8,7 @@ import org.hibernate.validator.constraints.Range;
 import jakarta.validation.constraints.*;
 
 @Entity
+@Cacheable
 @Data
 @NoArgsConstructor
 public class Student {
