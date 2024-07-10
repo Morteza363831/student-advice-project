@@ -2,7 +2,7 @@ package com.example.studentadviceproject.controller;
 
 import com.example.studentadviceproject.dto.ProvinceCityDto;
 import com.example.studentadviceproject.dto.ProvinceDto;
-import com.example.studentadviceproject.entity.CityDto;
+import com.example.studentadviceproject.dto.CityDto;
 import com.example.studentadviceproject.service.CityService;
 import com.example.studentadviceproject.service.ProvinceService;
 import org.springframework.stereotype.Controller;
@@ -37,7 +37,9 @@ public class CityController {
     @PostMapping("cities/new")
     public String saveCity(@ModelAttribute("city") ProvinceCityDto provinceCityDto) {
         ProvinceDto provinceDto = provinceService.getProvinceById(provinceCityDto.getProvinceId());
-        CityDto cityDto = new CityDto(provinceCityDto.getId(),provinceCityDto.getName());
+        CityDto cityDto = new CityDto();
+        cityDto.setId(provinceCityDto.getId());
+        cityDto.setName(provinceCityDto.getName());
         cityService.createCity(cityDto,provinceDto);
         return "redirect:/cities/new";
     }

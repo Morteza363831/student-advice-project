@@ -1,6 +1,8 @@
 package com.example.studentadviceproject.service;
 
 import com.example.studentadviceproject.dto.AdviceDto;
+import com.example.studentadviceproject.dto.CityDto;
+import com.example.studentadviceproject.dto.ProvinceDto;
 import com.example.studentadviceproject.dto.StudentDto;
 import com.example.studentadviceproject.entity.Student;
 
@@ -8,7 +10,7 @@ import java.util.List;
 
 public interface StudentService {
 
-    Student createStudent(StudentDto studentDto);
+    Student createStudent(StudentDto studentDto, ProvinceDto provinceDto, CityDto cityDto);
 
     Student updateStudent(StudentDto studentDto, AdviceDto adviceDto);
 

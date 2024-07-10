@@ -24,6 +24,14 @@ public class Student {
     private String email;
     private String phone;
 
+    @OneToOne(orphanRemoval = true)
+    @JoinColumn(name = "city_id")
+    private City city;
+
+    @OneToOne(orphanRemoval = true)
+    @JoinColumn(name = "province_id")
+    private Province province;
+
     @OneToOne
     @JoinColumn(name = "advice_id")
     private Advice advice;

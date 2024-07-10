@@ -1,8 +1,12 @@
 package com.example.studentadviceproject.service;
 
 import com.example.studentadviceproject.dto.AdviceDto;
+import com.example.studentadviceproject.dto.CityDto;
+import com.example.studentadviceproject.dto.ProvinceDto;
 import com.example.studentadviceproject.dto.StudentDto;
 import com.example.studentadviceproject.entity.Advice;
+import com.example.studentadviceproject.entity.City;
+import com.example.studentadviceproject.entity.Province;
 import com.example.studentadviceproject.entity.Student;
 import com.example.studentadviceproject.repository.StudentRepository;
 import jakarta.transaction.Transactional;
@@ -26,8 +30,13 @@ public class StudentServiceImpl implements StudentService{
     }
 
     @Override
-    public Student createStudent(StudentDto studentDto) {
-        @Valid Student student = modelMapper.map(studentDto, Student.class);
+    @Transactional
+    public Student createStudent(StudentDto studentDto, ProvinceDto provinceDto, CityDto cityDto) {
+        Province province = modelMapper.map(provinceDto, Province.class);
+        City city = modelMapper.map(cityDto, City.class);
+        Student student = modelMapper.map(studentDto, Student.class);
+        student.setProvince(province);
+        student.setCity(city);
         return studentRepository.save(student);
     }
 

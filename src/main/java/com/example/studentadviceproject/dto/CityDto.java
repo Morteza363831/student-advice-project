@@ -1,8 +1,10 @@
-package com.example.studentadviceproject.entity;
+package com.example.studentadviceproject.dto;
 
+import com.example.studentadviceproject.entity.City;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.Data;
 import lombok.Value;
 
 import java.io.Serializable;
@@ -10,7 +12,7 @@ import java.io.Serializable;
 /**
  * DTO for {@link City}
  */
-@Value
+@Data
 public class CityDto implements Serializable {
     @NotNull(message = "city id cant be null")
     Long id;

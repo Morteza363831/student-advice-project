@@ -3,11 +3,14 @@ package com.example.studentadviceproject.service;
 import com.example.studentadviceproject.dto.ProvinceCityDto;
 import com.example.studentadviceproject.dto.ProvinceDto;
 import com.example.studentadviceproject.entity.City;
-import com.example.studentadviceproject.entity.CityDto;
+import com.example.studentadviceproject.dto.CityDto;
 import com.example.studentadviceproject.entity.Province;
 import com.example.studentadviceproject.repository.CityRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class CityServiceImpl implements CityService {
@@ -32,5 +35,13 @@ public class CityServiceImpl implements CityService {
     public void deleteCity(ProvinceCityDto provinceCityDto) {
         City city = modelMapper.map(provinceCityDto, City.class);
         cityRepository.delete(city);
+    }
+
+
+    @Override
+    public CityDto getCityById(Long id) {
+        City city = cityRepository.findById(id).get();
+        CityDto cityDto = modelMapper.map(city, CityDto.class);
+        return cityDto;
     }
 }

@@ -1,6 +1,7 @@
 package com.example.studentadviceproject.entity;
 
 import jakarta.persistence.*;
+import jakarta.transaction.Transactional;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,7 +19,7 @@ public class Province {
     private Long id;
     private String name;
 
-    @OneToMany(mappedBy = "province", orphanRemoval = true)
+    @OneToMany(mappedBy = "province", orphanRemoval = true, fetch = FetchType.EAGER)
     private List<City> cities = new ArrayList<>();
 
 }

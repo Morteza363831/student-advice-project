@@ -1,8 +1,11 @@
 package com.example.studentadviceproject.service;
 
+import com.example.studentadviceproject.dto.CityDto;
 import com.example.studentadviceproject.dto.ProvinceDto;
+import com.example.studentadviceproject.entity.City;
 import com.example.studentadviceproject.entity.Province;
 import com.example.studentadviceproject.repository.ProvinceRepository;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +37,7 @@ public class ProvinceServiceImpl implements ProvinceService {
     }
 
     @Override
+    @Transactional
     public List<ProvinceDto> getAllProvinces() {
         List<Province> provinces = provinceRepository.findAll();
         List<ProvinceDto> provinceDtos = new ArrayList<>();
@@ -48,6 +52,13 @@ public class ProvinceServiceImpl implements ProvinceService {
     public ProvinceDto getProvinceById(Long id) {
         Province province = provinceRepository.findById(id).get();
         ProvinceDto provinceDto = modelMapper.map(province, ProvinceDto.class);
+        List<CityDto> cityDtos = new ArrayList<>();
+        for(City city : province.getCities()) {
+
+            CityDto cityDto = modelMapper.map(city, CityDto.class);
+            cityDtos.add(cityDto);
+        }
+        provinceDto.setCities(cityDtos);
         return provinceDto;
     }
 }

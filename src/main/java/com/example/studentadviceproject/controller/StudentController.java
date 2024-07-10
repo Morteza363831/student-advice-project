@@ -1,10 +1,10 @@
 package com.example.studentadviceproject.controller;
 
-import com.example.studentadviceproject.dto.AdviceDto;
-import com.example.studentadviceproject.dto.StudentAdviceDto;
-import com.example.studentadviceproject.dto.StudentDto;
-import com.example.studentadviceproject.dto.StudentKodeMelli;
+import com.example.studentadviceproject.dto.*;
+import com.example.studentadviceproject.entity.City;
 import com.example.studentadviceproject.service.AdvicerService;
+import com.example.studentadviceproject.service.CityService;
+import com.example.studentadviceproject.service.ProvinceService;
 import com.example.studentadviceproject.service.StudentService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -14,34 +14,64 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 public class StudentController {
 
     private final StudentService studentService;
     private final AdvicerService advicerService;
+    private final ProvinceService provinceService;
+    private final CityService cityService;
 
-    public StudentController( StudentService studentService, AdvicerService advicerService) {
+
+    public StudentController(StudentService studentService, AdvicerService advicerService,
+                             ProvinceService provinceService, CityService cityService) {
+
         this.studentService = studentService;
         this.advicerService = advicerService;
+        this.provinceService = provinceService;
+        this.cityService = cityService;
     }
 
-
+    @ModelAttribute("student")
+    public StudentDto studentDto() {
+        return new StudentDto();
+    }
 
     @GetMapping("/students/new")
     public String addStudent(Model model) {
-        model.addAttribute("student", new StudentDto());
+        Map<Long,String> provinceDtos = provinceService.getAllProvinces()
+                .stream()
+                .collect(Collectors.toMap(ProvinceDto::getId, ProvinceDto::getName));
+        model.addAttribute("provinces", provinceDtos);
+
         return "addStudent";
     }
     @PostMapping("/students/new")
-    public String addStudent(@Valid @ModelAttribute("student") StudentDto studentDto
+    public String addStudent(Model model,@Valid @ModelAttribute("student") StudentDto studentDto
             ,BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
           return "addStudent";
         }
-        studentService.createStudent(studentDto);
+        ProvinceDto provinceDto = provinceService.getProvinceById(studentDto.getProvinceId());
+        if(studentDto.getCityId() == null) {
+            List<CityDto> cityDtos = provinceDto.getCities();
+            Map<Long,String> provinceMap = new HashMap<>();
+            provinceMap.put(provinceDto.getId(), provinceDto.getName());
+            model.addAttribute("provinces", provinceMap);
+            model.addAttribute("cities", cityDtos);
+            return "addStudent";
+        }
+        System.out.println(studentDto.getProvinceId() + "provinceDto");
+        CityDto cityDto = cityService.getCityById(studentDto.getCityId());
+        studentService.createStudent(studentDto,provinceDto,cityDto);
+
         return "redirect:/students/new";
     }
 

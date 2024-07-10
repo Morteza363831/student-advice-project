@@ -11,39 +11,54 @@
     <form th:action="@{/students/new}" th:object="${student}" method="post">
         <div class="mb-3">
             <label for="kodeMelli" class="form-label">Kode Melli</label>
-            <input type="text" class="form-control" id="kodeMelli" th:field="*{kodeMelli}" placeholder="Kode Melli">
+            <input type="text" class="form-control" id="kodeMelli" th:field="*{kodeMelli}"
+                   placeholder="Kode Melli" th:text="${student.kodeMelli}">
             <div th:if="${#fields.hasErrors('kodeMelli')}" th:errors="*{kodeMelli}" class="text-danger"></div>
         </div>
         <div class="mb-3">
             <label for="firstName" class="form-label">First Name</label>
-            <input type="text" class="form-control" id="firstName" th:field="*{firstName}" placeholder="First Name">
+            <input type="text" class="form-control" id="firstName" th:field="*{firstName}"
+                   placeholder="First Name" th:text="${student.firstName}">
             <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="text-danger"></div>
         </div>
         <div class="mb-3">
             <label for="lastName" class="form-label">Last Name</label>
-            <input type="text" class="form-control" id="lastName" th:field="*{lastName}" placeholder="Last Name">
+            <input type="text" class="form-control" id="lastName" th:field="*{lastName}"
+                   placeholder="Last Name" th:text="${student.lastName}">
             <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="text-danger"></div>
         </div>
         <div class="mb-3">
             <label for="gender" class="form-label">Gender</label>
-            <input type="text" class="form-control" id="gender" th:field="*{gender}" placeholder="Gender">
+            <input type="text" class="form-control" id="gender" th:field="*{gender}"
+                   placeholder="Gender" th:text="${student.gender}">
             <div th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}" class="text-danger"></div>
         </div>
         <div class="mb-3">
             <label for="age" class="form-label">Age</label>
-            <input type="text" class="form-control" id="age" th:field="*{age}" placeholder="Age">
+            <input type="text" class="form-control" id="age" th:field="*{age}"
+                   placeholder="Age" th:text="${student.age}">
             <div th:if="${#fields.hasErrors('age')}" th:errors="*{age}" class="text-danger"></div>
         </div>
         <div class="mb-3">
             <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" th:field="*{email}" placeholder="Email">
+            <input type="email" class="form-control" id="email" th:field="*{email}"
+                   placeholder="Email" th:text="${student.email}">
             <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></div>
         </div>
         <div class="mb-3">
             <label for="phone" class="form-label">Phone</label>
-            <input type="text" class="form-control" id="phone" th:field="*{phone}" placeholder="Phone">
+            <input type="text" class="form-control" id="phone" th:field="*{phone}"
+                   placeholder="Phone" th:text="${student.phone}">
             <div th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="text-danger"></div>
         </div>
+        <select class="form-select" id="province" th:field="*{provinceId}" th:selected="0">
+            <option value="">Select a province</option>
+            <option th:each="entry : ${provinces}" th:value="${entry.key}" th:text="${entry.value}"></option>
+        </select>
+       <select class="form-select" id="city" th:field="*{cityId}">
+            <option value="">Select a province</option>
+            <option th:each="city : ${cities}" th:value="${city.id}" th:text="${city.name}"></option>
+        </select>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>

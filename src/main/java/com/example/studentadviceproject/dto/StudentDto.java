@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NonNull;
 import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.UniqueElements;
+import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.io.Serializable;
@@ -44,4 +45,11 @@ public class StudentDto {
     @Size(min = 11, max = 11, message = "phone number cant have more than 11 digits")
     @Pattern(regexp = "^09\\d{9}$")
     String phone;
+
+
+    Long provinceId;
+    Long cityId;
+
+
+
 }

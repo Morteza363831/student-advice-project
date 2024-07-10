@@ -1,10 +1,13 @@
 package com.example.studentadviceproject.dto;
 
+import com.example.studentadviceproject.entity.City;
 import com.example.studentadviceproject.entity.Province;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * DTO for {@link Province}
@@ -16,4 +19,6 @@ public class ProvinceDto {
     @Size(message = "invalid size of province name", min = 2, max = 20)
     @NotBlank(message = "province name isnt defined !")
     String name;
+
+    List<CityDto> cities;
 }
