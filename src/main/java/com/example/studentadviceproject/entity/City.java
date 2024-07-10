@@ -13,7 +13,7 @@ public class City {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Long id;
-
+    private String name;
     @ManyToOne
     @JoinColumn(name = "province_id")
     private Province province;
