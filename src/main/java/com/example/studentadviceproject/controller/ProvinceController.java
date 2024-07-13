@@ -2,6 +2,7 @@ package com.example.studentadviceproject.controller;
 
 import com.example.studentadviceproject.dto.ProvinceCompleteDto;
 import com.example.studentadviceproject.service.ProvinceService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,7 +25,7 @@ public class ProvinceController {
         return "addProvince";
     }
     @PostMapping("/provinces/new")
-    public String newProvince(@ModelAttribute("province") ProvinceCompleteDto provinceCompleteDto,
+    public String newProvince(@Valid @ModelAttribute("province") ProvinceCompleteDto provinceCompleteDto,
                              BindingResult bindingResult) {
 
         if(bindingResult.hasErrors()) {

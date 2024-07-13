@@ -81,7 +81,7 @@ public class StudentController {
         return "updateStudent";
     }
     @PostMapping("/students/update")
-    public String updateStudent(@ModelAttribute("studentAdvice")StudentAdviceDto studentAdviceDto
+    public String updateStudent(@Valid @ModelAttribute("studentAdvice")StudentAdviceDto studentAdviceDto
             ,BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
@@ -102,7 +102,7 @@ public class StudentController {
         return "findStudent";
     }
     @PostMapping("/students/find")
-    public String getStudent(@ModelAttribute("studentKodeMelli") StudentKodeMelli studentKodeMelli
+    public String getStudent(@Valid @ModelAttribute("studentKodeMelli") StudentKodeMelli studentKodeMelli
             , HttpSession session, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
@@ -135,7 +135,7 @@ public class StudentController {
         return "deleteStudent";
     }
     @PostMapping("/students/delete")
-    public String deleteStudent(@ModelAttribute("studentKodeMelli") StudentKodeMelli studentKodeMelli,
+    public String deleteStudent(@Valid @ModelAttribute("studentKodeMelli") StudentKodeMelli studentKodeMelli,
                                 BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {

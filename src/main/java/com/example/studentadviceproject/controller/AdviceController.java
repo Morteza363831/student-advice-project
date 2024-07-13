@@ -55,7 +55,7 @@ public class AdviceController {
         return "findAdvice";
     }
     @PostMapping("advices/find")
-    public String getAdvice(@ModelAttribute("adviceKodeMelli") AdviceKodeMelli adviceKodeMelli,
+    public String getAdvice(@Valid @ModelAttribute("adviceKodeMelli") AdviceKodeMelli adviceKodeMelli,
                             HttpSession session, BindingResult bindingResult) {
 
         if(bindingResult.hasErrors()) {
@@ -92,7 +92,7 @@ public class AdviceController {
         return "deleteAdvice";
     }
     @PostMapping("/advices/delete")
-    public String deleteStudent(@ModelAttribute("adviceKodeMelli") AdviceKodeMelli adviceKodeMelli) {
+    public String deleteStudent(@Valid @ModelAttribute("adviceKodeMelli") AdviceKodeMelli adviceKodeMelli) {
         studentService.deleteStudent(adviceKodeMelli.getAdviceKodeMelli());
         return "redirect:/advices/all";
     }

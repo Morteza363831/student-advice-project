@@ -6,6 +6,7 @@ import com.example.studentadviceproject.dto.CityDto;
 import com.example.studentadviceproject.dto.ProvinceDto;
 import com.example.studentadviceproject.service.CityService;
 import com.example.studentadviceproject.service.ProvinceService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,7 +37,7 @@ public class CityController {
         return "addCity";
     }
     @PostMapping("cities/new")
-    public String saveCity(@ModelAttribute("city") ProvinceCityDto provinceCityDto) {
+    public String saveCity(@Valid @ModelAttribute("city") ProvinceCityDto provinceCityDto) {
         ProvinceDto provinceDto = provinceService.getProvinceWithCities(provinceCityDto.getProvinceId());
         CityDto cityDto = new CityDto();
         cityDto.setId(provinceCityDto.getId());

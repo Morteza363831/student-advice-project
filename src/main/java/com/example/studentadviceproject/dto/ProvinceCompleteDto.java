@@ -19,5 +19,6 @@ public class ProvinceCompleteDto {
     @NotBlank(message = "province name isnt defined !")
     String name;
 
+    @NotNull(message = "cities cant be null")
     List<CityDto> cities;
 }
