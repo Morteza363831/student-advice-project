@@ -1,8 +1,9 @@
 package com.example.studentadviceproject.controller;
 
 import com.example.studentadviceproject.dto.ProvinceCityDto;
-import com.example.studentadviceproject.dto.ProvinceDto;
+import com.example.studentadviceproject.dto.ProvinceCompleteDto;
 import com.example.studentadviceproject.dto.CityDto;
+import com.example.studentadviceproject.dto.ProvinceDto;
 import com.example.studentadviceproject.service.CityService;
 import com.example.studentadviceproject.service.ProvinceService;
 import org.springframework.stereotype.Controller;
@@ -30,17 +31,17 @@ public class CityController {
         model.addAttribute("city", new ProvinceCityDto());
         Map<Long, String> provinceDtos = provinceService.getAllProvinces()
                 .stream()
-                .collect(Collectors.toMap(ProvinceDto::getId, ProvinceDto::getName));
+                .collect(Collectors.toMap(ProvinceCompleteDto::getId, ProvinceCompleteDto::getName));
         model.addAttribute("provinces", provinceDtos);
         return "addCity";
     }
     @PostMapping("cities/new")
     public String saveCity(@ModelAttribute("city") ProvinceCityDto provinceCityDto) {
-        ProvinceDto provinceDto = provinceService.getProvinceById(provinceCityDto.getProvinceId());
+        ProvinceDto provinceDto = provinceService.getProvinceWithCities(provinceCityDto.getProvinceId());
         CityDto cityDto = new CityDto();
         cityDto.setId(provinceCityDto.getId());
         cityDto.setName(provinceCityDto.getName());
-        cityService.createCity(cityDto,provinceDto);
+        cityService.createCity(cityDto, provinceDto);
         return "redirect:/cities/new";
     }
 }
