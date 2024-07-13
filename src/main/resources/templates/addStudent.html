@@ -16,6 +16,12 @@
             <div th:if="${#fields.hasErrors('kodeMelli')}" th:errors="*{kodeMelli}" class="text-danger"></div>
         </div>
         <div class="mb-3">
+            <label for="password" class="form-label">password</label>
+            <input type="password" class="form-control" id="password" th:field="*{password}"
+                   placeholder="password" th:text="${student.password}">
+            <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger"></div>
+        </div>
+        <div class="mb-3">
             <label for="firstName" class="form-label">First Name</label>
             <input type="text" class="form-control" id="firstName" th:field="*{firstName}"
                    placeholder="First Name" th:text="${student.firstName}">

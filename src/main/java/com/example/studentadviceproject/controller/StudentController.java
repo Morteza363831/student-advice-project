@@ -41,6 +41,12 @@ public class StudentController {
         return new StudentDto();
     }
 
+    @GetMapping("/login")
+    public String login(Model model) {
+        model.addAttribute("student",new StudentDto());
+        return "login";
+    }
+
     @GetMapping("/students/new")
     public String addStudent(Model model) {
         Map<Long,String> provinceDtos = provinceService.getAllProvinces()

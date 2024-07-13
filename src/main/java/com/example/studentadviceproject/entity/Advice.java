@@ -13,6 +13,7 @@ public class Advice {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String kodeMelli;
+    private String password;
     private String firstName;
     private String lastName;
     private Gender gender;

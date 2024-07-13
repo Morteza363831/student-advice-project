@@ -22,6 +22,10 @@ public class AdviceDto implements Serializable {
     @ValidNationalID(message = "kode melli is incorrect")
     String kodeMelli;
 
+    @Size(min = 6,max = 24, message = "password size must be between 6 and 24")
+    @NotBlank(message = "please enter your password")
+    String password;
+
     @NotBlank(message = "please enter your first name")
     @Size(min = 2, max = 20, message = "first name must be between 2 and 20")
     String firstName;
