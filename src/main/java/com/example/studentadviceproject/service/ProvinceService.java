@@ -1,5 +1,6 @@
 package com.example.studentadviceproject.service;
 
+import com.example.studentadviceproject.dto.ProvinceCompleteDto;
 import com.example.studentadviceproject.dto.ProvinceDto;
 import com.example.studentadviceproject.entity.Province;
 
@@ -7,11 +8,13 @@ import java.util.List;
 
 public interface ProvinceService {
 
-    Province createProvince(ProvinceDto provinceDto);
+    Province createProvince(ProvinceCompleteDto provinceCompleteDto);
 
-    void deleteProvince(ProvinceDto provinceDto);
+    void deleteProvince(ProvinceCompleteDto provinceCompleteDto);
 
-    List<ProvinceDto> getAllProvinces();
+    List<ProvinceCompleteDto> getAllProvinces();
 
-    ProvinceDto getProvinceById(Long id);
+    ProvinceCompleteDto getProvinceById(Long id);
+
+    ProvinceDto getProvinceWithCities(Long id);
 }

@@ -1,11 +1,10 @@
 package com.example.studentadviceproject.service;
 
 import com.example.studentadviceproject.dto.ProvinceCityDto;
+import com.example.studentadviceproject.dto.ProvinceCompleteDto;
 import com.example.studentadviceproject.dto.ProvinceDto;
 import com.example.studentadviceproject.entity.City;
 import com.example.studentadviceproject.dto.CityDto;
-
-import java.util.List;
 
 public interface CityService {
 

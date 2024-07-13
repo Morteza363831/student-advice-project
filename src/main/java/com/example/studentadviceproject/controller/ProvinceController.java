@@ -1,7 +1,6 @@
 package com.example.studentadviceproject.controller;
 
-import com.example.studentadviceproject.dto.ProvinceDto;
-import com.example.studentadviceproject.entity.Province;
+import com.example.studentadviceproject.dto.ProvinceCompleteDto;
 import com.example.studentadviceproject.service.ProvinceService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,17 +20,17 @@ public class ProvinceController {
 
     @GetMapping("/provinces/new")
     public String newProvince(Model model) {
-        model.addAttribute("province", new ProvinceDto());
+        model.addAttribute("province", new ProvinceCompleteDto());
         return "addProvince";
     }
     @PostMapping("/provinces/new")
-    public String newProvince(@ModelAttribute("province") ProvinceDto provinceDto,
+    public String newProvince(@ModelAttribute("province") ProvinceCompleteDto provinceCompleteDto,
                              BindingResult bindingResult) {
 
         if(bindingResult.hasErrors()) {
             return "addProvince";
         }
-        provinceService.createProvince(provinceDto);
+        provinceService.createProvince(provinceCompleteDto);
         return "redirect:/provinces/new";
     }
 

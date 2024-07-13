@@ -1,6 +1,7 @@
 package com.example.studentadviceproject.service;
 
 import com.example.studentadviceproject.dto.ProvinceCityDto;
+import com.example.studentadviceproject.dto.ProvinceCompleteDto;
 import com.example.studentadviceproject.dto.ProvinceDto;
 import com.example.studentadviceproject.entity.City;
 import com.example.studentadviceproject.dto.CityDto;
@@ -8,9 +9,6 @@ import com.example.studentadviceproject.entity.Province;
 import com.example.studentadviceproject.repository.CityRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class CityServiceImpl implements CityService {
