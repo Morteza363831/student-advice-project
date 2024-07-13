@@ -1,7 +1,6 @@
 package com.example.studentadviceproject.controller;
 
 import com.example.studentadviceproject.dto.*;
-import com.example.studentadviceproject.entity.City;
 import com.example.studentadviceproject.service.AdvicerService;
 import com.example.studentadviceproject.service.CityService;
 import com.example.studentadviceproject.service.ProvinceService;
@@ -10,7 +9,6 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
@@ -47,7 +45,7 @@ public class StudentController {
     public String addStudent(Model model) {
         Map<Long,String> provinceDtos = provinceService.getAllProvinces()
                 .stream()
-                .collect(Collectors.toMap(ProvinceDto::getId, ProvinceDto::getName));
+                .collect(Collectors.toMap(ProvinceCompleteDto::getId, ProvinceCompleteDto::getName));
         model.addAttribute("provinces", provinceDtos);
 
         return "addStudent";
@@ -59,18 +57,18 @@ public class StudentController {
         if (bindingResult.hasErrors()) {
           return "addStudent";
         }
-        ProvinceDto provinceDto = provinceService.getProvinceById(studentDto.getProvinceId());
+        ProvinceCompleteDto provinceCompleteDto = provinceService.getProvinceById(studentDto.getProvinceId());
         if(studentDto.getCityId() == null) {
-            List<CityDto> cityDtos = provinceDto.getCities();
+            List<CityDto> cityDtos = provinceCompleteDto.getCities();
             Map<Long,String> provinceMap = new HashMap<>();
-            provinceMap.put(provinceDto.getId(), provinceDto.getName());
+            provinceMap.put(provinceCompleteDto.getId(), provinceCompleteDto.getName());
             model.addAttribute("provinces", provinceMap);
             model.addAttribute("cities", cityDtos);
             return "addStudent";
         }
         System.out.println(studentDto.getProvinceId() + "provinceDto");
         CityDto cityDto = cityService.getCityById(studentDto.getCityId());
-        studentService.createStudent(studentDto,provinceDto,cityDto);
+        studentService.createStudent(studentDto, provinceCompleteDto,cityDto);
 
         return "redirect:/students/new";
     }

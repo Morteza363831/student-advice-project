@@ -2,7 +2,7 @@ package com.example.studentadviceproject.service;
 
 import com.example.studentadviceproject.dto.AdviceDto;
 import com.example.studentadviceproject.dto.CityDto;
-import com.example.studentadviceproject.dto.ProvinceDto;
+import com.example.studentadviceproject.dto.ProvinceCompleteDto;
 import com.example.studentadviceproject.dto.StudentDto;
 import com.example.studentadviceproject.entity.Advice;
 import com.example.studentadviceproject.entity.City;
@@ -13,7 +13,6 @@ import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import jakarta.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,8 +30,8 @@ public class StudentServiceImpl implements StudentService{
 
     @Override
     @Transactional
-    public Student createStudent(StudentDto studentDto, ProvinceDto provinceDto, CityDto cityDto) {
-        Province province = modelMapper.map(provinceDto, Province.class);
+    public Student createStudent(StudentDto studentDto, ProvinceCompleteDto provinceCompleteDto, CityDto cityDto) {
+        Province province = modelMapper.map(provinceCompleteDto, Province.class);
         City city = modelMapper.map(cityDto, City.class);
         Student student = modelMapper.map(studentDto, Student.class);
         student.setProvince(province);
