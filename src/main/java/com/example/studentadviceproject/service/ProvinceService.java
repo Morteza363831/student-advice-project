@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ProvinceService {
 
-    Province createProvince(ProvinceCompleteDto provinceCompleteDto);
+    Province createProvince(ProvinceDto provinceDto);
 
     void deleteProvince(ProvinceCompleteDto provinceCompleteDto);
 

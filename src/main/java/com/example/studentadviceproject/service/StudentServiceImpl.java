@@ -11,6 +11,7 @@ import com.example.studentadviceproject.entity.Student;
 import com.example.studentadviceproject.repository.StudentRepository;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,10 +23,13 @@ public class StudentServiceImpl implements StudentService{
 
     private final StudentRepository studentRepository;
     private final ModelMapper modelMapper;
+    private final PasswordEncoder passwordEncoder;
 
-    public StudentServiceImpl(StudentRepository studentRepository, ModelMapper modelMapper) {
+    public StudentServiceImpl(StudentRepository studentRepository, ModelMapper modelMapper,
+                              PasswordEncoder passwordEncoder) {
         this.studentRepository = studentRepository;
         this.modelMapper = modelMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -36,6 +40,7 @@ public class StudentServiceImpl implements StudentService{
         Student student = modelMapper.map(studentDto, Student.class);
         student.setProvince(province);
         student.setCity(city);
+        student.setPassword(passwordEncoder.encode(student.getPassword()));
         return studentRepository.save(student);
     }
 

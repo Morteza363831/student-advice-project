@@ -7,8 +7,7 @@ import lombok.Data;
 @Data
 public class ProvinceDto {
 
-    @NotNull(message = "province id cant be null")
-    Long id;
+    long id;
     @NotBlank(message = "please enter province name")
     String name;
 

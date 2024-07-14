@@ -19,7 +19,9 @@ public class Province {
     private Long id;
     private String name;
 
-    @OneToMany(mappedBy = "province", orphanRemoval = true, fetch = FetchType.EAGER)
+
+
+    @OneToMany(mappedBy = "province", orphanRemoval = true, fetch = FetchType.LAZY)
     private List<City> cities = new ArrayList<>();
 
 }

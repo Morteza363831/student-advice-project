@@ -13,8 +13,7 @@ import java.util.List;
  */
 @Data
 public class ProvinceCompleteDto {
-    @NotNull(message = "province id cant be null")
-    Long id;
+    long id;
     @Size(message = "invalid size of province name", min = 2, max = 20)
     @NotBlank(message = "province name isnt defined !")
     String name;
