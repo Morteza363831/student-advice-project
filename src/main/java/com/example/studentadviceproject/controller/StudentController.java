@@ -41,11 +41,15 @@ public class StudentController {
         return new StudentDto();
     }
 
+
+
     @GetMapping("/login")
     public String login(Model model) {
         model.addAttribute("student",new StudentDto());
         return "login";
     }
+
+
 
     @GetMapping("/students/new")
     public String addStudent(Model model) {
@@ -64,6 +68,7 @@ public class StudentController {
           return "addStudent";
         }
         ProvinceCompleteDto provinceCompleteDto = provinceService.getProvinceById(studentDto.getProvinceId());
+        System.out.println("f : " + provinceCompleteDto.getId());
         if(studentDto.getCityId() == null) {
             List<CityDto> cityDtos = provinceCompleteDto.getCities();
             Map<Long,String> provinceMap = new HashMap<>();
@@ -72,7 +77,9 @@ public class StudentController {
             model.addAttribute("cities", cityDtos);
             return "addStudent";
         }
-        System.out.println(studentDto.getProvinceId() + "provinceDto");
+
+        System.out.println(studentDto.getProvinceId() + " provinceDto");
+        System.out.println(studentDto.getCityId() + " cityDto");
         CityDto cityDto = cityService.getCityById(studentDto.getCityId());
         studentService.createStudent(studentDto, provinceCompleteDto,cityDto);
 

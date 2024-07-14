@@ -14,8 +14,7 @@ import java.io.Serializable;
  */
 @Data
 public class CityDto implements Serializable {
-    @NotNull(message = "city id cant be null")
-    Long id;
+    long id;
     @Size(message = "bad size for city", min = 2, max = 20)
     @NotBlank(message = "bad name for city")
     String name;

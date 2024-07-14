@@ -25,8 +25,8 @@ public class ProvinceServiceImpl implements ProvinceService {
     }
 
     @Override
-    public Province createProvince(ProvinceCompleteDto provinceCompleteDto) {
-        Province province = modelMapper.map(provinceCompleteDto, Province.class);
+    public Province createProvince(ProvinceDto provinceDto) {
+        Province province = modelMapper.map(provinceDto, Province.class);
 
         return provinceRepository.save(province);
     }

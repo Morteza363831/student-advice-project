@@ -15,7 +15,6 @@ import java.io.Serializable;
 
 @Data
 public class AdviceDto implements Serializable {
-    @NotNull(message = "id cant be null")
     long id;
 
     @NotNull(message = "kode melli cant be null")

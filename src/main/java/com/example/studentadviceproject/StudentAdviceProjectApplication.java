@@ -18,7 +18,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableWebMvc
 @Configuration
 @ComponentScan(basePackages = "com.example")
-public class StudentAdviceProjectApplication implements CommandLineRunner {
+public class StudentAdviceProjectApplication /*implements CommandLineRunner*/ {
 
     private final StudentRepository studentRepository;
     private final PasswordEncoder passwordEncoder;
@@ -39,7 +39,7 @@ public class StudentAdviceProjectApplication implements CommandLineRunner {
         SpringApplication.run(StudentAdviceProjectApplication.class, args);
     }
 
-    @Override
+    /*@Override
     public void run(String... args) throws Exception {
 
         Student student = new Student();
@@ -50,5 +50,5 @@ public class StudentAdviceProjectApplication implements CommandLineRunner {
         student.setPassword(encodedPassword);
         studentRepository.save(student);
 
-    }
+    }*/
 }
