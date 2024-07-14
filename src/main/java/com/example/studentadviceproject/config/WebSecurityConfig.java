@@ -3,6 +3,7 @@ package com.example.studentadviceproject.config;
 import com.example.studentadviceproject.dto.StudentDto;
 import com.example.studentadviceproject.entity.Student;
 import com.example.studentadviceproject.repository.StudentRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 //import org.springframework.security.config.annotation.authentication.builders.*;
 import org.springframework.context.annotation.ComponentScan;
@@ -10,6 +11,7 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.SecurityBuilder;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.*;
 import org.springframework.security.config.annotation.web.*;
 import org.springframework.security.core.userdetails.User;
@@ -28,36 +30,33 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @ComponentScan("com.example")
 public class WebSecurityConfig{
 
+    private final StudentRepository studentRepository;
 
+    public WebSecurityConfig(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
+    }
 
-//    @Bean
-//    public UserDetailsService userDetailsService(StudentRepository studentRepository) {
-//
-//        return kodeMelli -> {
-//            Student student = studentRepository.findStudentsByKodeMelli(kodeMelli);
-//            if (student == null) {
-//                throw new UsernameNotFoundException("user not found");
-//            }
-//            return org.springframework.security.core.userdetails.User.builder()
-//                    .username("morteza")
-//                    .password("123456")
-//                    .roles("STUDENT")
-//                    .build();
-//        };
-//    }
     @Bean
-    public InMemoryUserDetailsManager userDetailsService(PasswordEncoder passwordEncoder) {
-        UserDetails user = User.withUsername("morteza")
-                .password(passwordEncoder.encode("1234567"))
-                .roles("USER")
-                .build();
+    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
+        if (studentRepository == null) {
+        }
+        else {
+        }
 
-        UserDetails admin = User.withUsername("admin")
-                .password(passwordEncoder.encode("admin"))
-                .roles("USER", "ADMIN")
-                .build();
-
-        return new InMemoryUserDetailsManager(user, admin);
+        return username -> {
+            Student student = studentRepository.findStudentsByKodeMelli(username);
+            System.out.println(student.getKodeMelli() + " " + student.getPassword());
+            String password = passwordEncoder.encode(student.getPassword());
+            System.out.println(password);
+            if (student == null) {
+                throw new UsernameNotFoundException("user not found");
+            }
+            return org.springframework.security.core.userdetails.User.builder()
+                    .username(student.getKodeMelli())
+                    .password(student.getPassword())
+                    .roles("STUDENT")
+                    .build();
+        };
     }
 
     @Bean
@@ -65,7 +64,7 @@ public class WebSecurityConfig{
         http
                 .authorizeHttpRequests(request ->
                         request
-                                .requestMatchers("/advices/all","/students/new","students/new","/h2-console/")
+                                .requestMatchers("/students/new**")
                                 .permitAll()
                                 .anyRequest()
                                 .authenticated())
@@ -76,22 +75,20 @@ public class WebSecurityConfig{
                                 .permitAll())
                 .csrf(csrf ->
                         csrf
-                                .ignoringRequestMatchers("/login"));
+                                .ignoringRequestMatchers("/h2-console/**"));
 
         return http.build();
     }
 
-
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//
-//        return new BCryptPasswordEncoder();
-//    }
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> web.ignoring().requestMatchers("/h2-console/**");
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-        return encoder;
+
+        return new BCryptPasswordEncoder();
     }
 
 }
